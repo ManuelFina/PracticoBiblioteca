@@ -1,0 +1,125 @@
+﻿@page "/usuarios"
+@inject IUsuarioService UsuarioService
+
+<h3 class="mb-4">Gestión de Usuarios</h3>
+
+<button class="btn btn-success mb-3" @onclick="NuevoUsuario">
+    <i class="bi bi-person-plus me-1"></i> Agregar usuario
+</button>
+
+@if (usuarios.Count == 0)
+{
+    <div class="alert alert-info">No hay usuarios registrados.</div>
+}
+else
+{
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        @foreach (var usuario in usuarios)
+        {
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    <img src="@usuario.Imagen" class="card-img-top" alt="Foto usuario" style="height: 250px; object-fit: cover;" />
+                    <div class="card-body">
+                        <h5 class="card-title">@usuario.Nombre</h5>
+                        <p class="card-text"><strong>Email:</strong> @usuario.Email</p>
+                        <button class="btn btn-warning btn-sm me-2" @onclick="() => EditarUsuario(usuario)">Editar</button>
+                        <button class="btn btn-danger btn-sm" @onclick="() => EliminarUsuario(usuario.Id)">Eliminar</button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+
+<hr class="my-4" />
+
+@if (modoFormulario)
+{
+    <EditForm Model="usuarioEditando" OnValidSubmit="GuardarUsuario">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <div class="mb-3">
+            <label class="form-label">Nombre</label>
+            <InputText class="form-control" @bind-Value="usuarioEditando.Nombre" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Email</label>
+            <InputText class="form-control" @bind-Value="usuarioEditando.Email" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Clave</label>
+            <InputText type="password" class="form-control" @bind-Value="usuarioEditando.Clave" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Ruta Imagen (ej: imagenes/user1.jpg)</label>
+            <InputText class="form-control" @bind-Value="usuarioEditando.Imagen" />
+        </div>
+
+        <button class="btn btn-primary me-2" type="submit">
+            <i class="bi bi-save"></i> Guardar
+        </button>
+        <button class="btn btn-secondary" type="button" @onclick="Cancelar">
+            Cancelar
+        </button>
+    </EditForm>
+}
+
+@code {
+    private List<Usuario> usuarios = new();
+    private Usuario usuarioEditando = new();
+    private bool modoFormulario = false;
+
+    protected override void OnInitialized()
+    {
+        usuarios = UsuarioService.ObtenerTodos();
+    }
+
+    private void NuevoUsuario()
+    {
+        usuarioEditando = new Usuario();
+        modoFormulario = true;
+    }
+
+    private void EditarUsuario(Usuario usuario)
+    {
+        usuarioEditando = new Usuario
+        {
+            Id = usuario.Id,
+            Nombre = usuario.Nombre,
+            Email = usuario.Email,
+            Clave = usuario.Clave,
+            Imagen = usuario.Imagen
+        };
+        modoFormulario = true;
+    }
+
+    private void GuardarUsuario()
+    {
+        if (usuarioEditando.Id == 0)
+        {
+            UsuarioService.Agregar(usuarioEditando);
+        }
+        else
+        {
+            UsuarioService.Actualizar(usuarioEditando);
+        }
+
+        usuarios = UsuarioService.ObtenerTodos();
+        modoFormulario = false;
+    }
+
+    private void EliminarUsuario(int id)
+    {
+        UsuarioService.Eliminar(id);
+        usuarios = UsuarioService.ObtenerTodos();
+    }
+
+    private void Cancelar()
+    {
+        modoFormulario = false;
+    }
+}
