@@ -5,7 +5,7 @@
 <h3 class="mb-4">Gestión de Libros</h3>
 
 <button class="btn btn-success mb-3" @onclick="VolverAtras">
-    <i class="bi bi-plus-circle me-1"></i> Volver atras
+    <i class="bi bi-arrow-left-circle me-1"></i> Volver atrás
 </button>
 
 <button class="btn btn-success mb-3" @onclick="NuevoLibro">
@@ -26,8 +26,11 @@ else
                     <img src="@libro.Imagen" class="card-img-top" alt="Portada" style="height: 250px; object-fit: cover;" />
                     <div class="card-body">
                         <h5 class="card-title">@libro.Titulo</h5>
-                        <p class="card-text"><strong>Autor:</strong> @libro.Autor<br /><strong>Año:</strong> @libro.AñoPublicacion</p>
-                        <button class="btn btn-warning btn-sm me-2" @onclick="() => EditarLibro(libro)">Editar</button>
+                        <p class="card-text">
+                            <strong>Autor:</strong> @libro.Autor<br />
+                            <strong>Año:</strong> @libro.AñoPublicacion
+                        </p>
+                        <button class="btn btn-warning btn-sm me-2" @onclick="() => EditarLibro(libro.Id)">Editar</button>
                         <button class="btn btn-danger btn-sm" @onclick="() => EliminarLibro(libro.Id)">Eliminar</button>
                     </div>
                 </div>
@@ -36,47 +39,8 @@ else
     </div>
 }
 
-<hr class="my-4" />
-
-@if (modoFormulario)
-{
-    <EditForm Model="libroEditando" OnValidSubmit="GuardarLibro">
-        <DataAnnotationsValidator />
-        <ValidationSummary />
-
-        <div class="mb-3">
-            <label class="form-label">Título</label>
-            <InputText class="form-control" @bind-Value="libroEditando.Titulo" />
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label">Autor</label>
-            <InputText class="form-control" @bind-Value="libroEditando.Autor" />
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label">Año de Publicación</label>
-            <InputNumber class="form-control" @bind-Value="libroEditando.AñoPublicacion" />
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label">Ruta Imagen (ej: imagenes/libro1.jpg)</label>
-            <InputText class="form-control" @bind-Value="libroEditando.Imagen" />
-        </div>
-
-        <button class="btn btn-primary me-2" type="submit">
-            <i class="bi bi-save"></i> Guardar
-        </button>
-        <button class="btn btn-secondary" type="button" @onclick="Cancelar">
-            Cancelar
-        </button>
-    </EditForm>
-}
-
 @code {
     private List<Libro> libros = new();
-    private Libro libroEditando = new();
-    private bool modoFormulario = false;
 
     protected override void OnInitialized()
     {
@@ -85,47 +49,18 @@ else
 
     private void NuevoLibro()
     {
-        libroEditando = new Libro();
-        modoFormulario = true;
+        Nav.NavigateTo("/libroform/0"); 
     }
 
-    private void EditarLibro(Libro libro)
+    private void EditarLibro(int id)
     {
-        libroEditando = new Libro
-        {
-            Id = libro.Id,
-            Titulo = libro.Titulo,
-            Autor = libro.Autor,
-            AñoPublicacion = libro.AñoPublicacion,
-            Imagen = libro.Imagen
-        };
-        modoFormulario = true;
-    }
-
-    private void GuardarLibro()
-    {
-        if (libroEditando.Id == 0)
-        {
-            LibroService.Agregar(libroEditando);
-        }
-        else
-        {
-            LibroService.Actualizar(libroEditando);
-        }
-
-        libros = LibroService.ObtenerTodos();
-        modoFormulario = false;
+        Nav.NavigateTo($"/libroform/{id}");
     }
 
     private void EliminarLibro(int id)
     {
         LibroService.Eliminar(id);
         libros = LibroService.ObtenerTodos();
-    }
-
-    private void Cancelar()
-    {
-        modoFormulario = false;
     }
 
     private void VolverAtras()

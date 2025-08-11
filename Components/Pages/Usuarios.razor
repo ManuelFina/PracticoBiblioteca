@@ -2,11 +2,10 @@
 @inject IUsuarioService UsuarioService
 @inject NavigationManager Navigation
 
-
 <h3 class="mb-4">Gestión de Usuarios</h3>
 
 <button class="btn btn-success mb-3" @onclick="Volver">
-    <i class="bi bi-person-plus me-1"></i> Volver al menu
+    <i class="bi bi-arrow-left-circle me-1"></i> Volver al menú
 </button>
 
 <button class="btn btn-success mb-3" @onclick="NuevoUsuario">
@@ -28,8 +27,8 @@ else
                     <div class="card-body">
                         <h5 class="card-title">@usuario.Nombre</h5>
                         <p class="card-text"><strong>Email:</strong> @usuario.Email</p>
-                        <button class="btn btn-warning btn-sm me-2" @onclick="() => EditarUsuario(usuario)">Editar</button>
-                        <button class="btn btn-danger btn-sm" @onclick="() => EliminarUsuario(usuario.Id)">Eliminar</button>
+                        <button class="btn btn-warning btn-sm me-2" @onclick="() => EditarUsuario(usuario.Id)">Editar</button>
+                        <button class="btn btn-danger btn-sm" @onclick="() => ConfirmarEliminar(usuario.Id, usuario.Nombre)">Eliminar</button>
                     </div>
                 </div>
             </div>
@@ -37,47 +36,32 @@ else
     </div>
 }
 
-<hr class="my-4" />
-
-@if (modoFormulario)
+@if (mostrarModal)
 {
-    <EditForm Model="usuarioEditando" OnValidSubmit="GuardarUsuario">
-        <DataAnnotationsValidator />
-        <ValidationSummary />
-
-        <div class="mb-3">
-            <label class="form-label">Nombre</label>
-            <InputText class="form-control" @bind-Value="usuarioEditando.Nombre" />
+    <div class="modal fade show" style="display:block; background-color: rgba(0,0,0,0.5);">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title">Confirmar eliminación</h5>
+                    <button type="button" class="btn-close" @onclick="CerrarModal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>¿Seguro que deseas eliminar al usuario <strong>@usuarioAEliminarNombre</strong>?</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" @onclick="CerrarModal">Cancelar</button>
+                    <button class="btn btn-danger" @onclick="EliminarConfirmado">Eliminar</button>
+                </div>
+            </div>
         </div>
-
-        <div class="mb-3">
-            <label class="form-label">Email</label>
-            <InputText class="form-control" @bind-Value="usuarioEditando.Email" />
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label">Clave</label>
-            <InputText type="password" class="form-control" @bind-Value="usuarioEditando.Clave" />
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label">Ruta Imagen (ej: imagenes/user1.jpg)</label>
-            <InputText class="form-control" @bind-Value="usuarioEditando.Imagen" />
-        </div>
-
-        <button class="btn btn-primary me-2" type="submit">
-            <i class="bi bi-save"></i> Guardar
-        </button>
-        <button class="btn btn-secondary" type="button" @onclick="Cancelar">
-            Cancelar
-        </button>
-    </EditForm>
+    </div>
 }
 
 @code {
     private List<Usuario> usuarios = new();
-    private Usuario usuarioEditando = new();
-    private bool modoFormulario = false;
+    private bool mostrarModal = false;
+    private int usuarioAEliminarId;
+    private string usuarioAEliminarNombre = string.Empty;
 
     protected override void OnInitialized()
     {
@@ -86,52 +70,35 @@ else
 
     private void NuevoUsuario()
     {
-        usuarioEditando = new Usuario();
-        modoFormulario = true;
+        Navigation.NavigateTo("/usuarioform/0"); 
     }
 
-    private void EditarUsuario(Usuario usuario)
+    private void EditarUsuario(int id)
     {
-        usuarioEditando = new Usuario
-        {
-            Id = usuario.Id,
-            Nombre = usuario.Nombre,
-            Email = usuario.Email,
-            Clave = usuario.Clave,
-            Imagen = usuario.Imagen
-        };
-        modoFormulario = true;
+        Navigation.NavigateTo($"/usuarioform/{id}");
     }
 
-    private void GuardarUsuario()
+    private void ConfirmarEliminar(int id, string nombre)
     {
-        if (usuarioEditando.Id == 0)
-        {
-            UsuarioService.Agregar(usuarioEditando);
-        }
-        else
-        {
-            UsuarioService.Actualizar(usuarioEditando);
-        }
+        usuarioAEliminarId = id;
+        usuarioAEliminarNombre = nombre;
+        mostrarModal = true;
+    }
 
+    private void CerrarModal()
+    {
+        mostrarModal = false;
+    }
+
+    private void EliminarConfirmado()
+    {
+        UsuarioService.Eliminar(usuarioAEliminarId);
         usuarios = UsuarioService.ObtenerTodos();
-        modoFormulario = false;
-    }
-
-    private void EliminarUsuario(int id)
-    {
-        UsuarioService.Eliminar(id);
-        usuarios = UsuarioService.ObtenerTodos();
-    }
-
-    private void Cancelar()
-    {
-        modoFormulario = false;
+        mostrarModal = false;
     }
 
     private void Volver()
     {
         Navigation.NavigateTo("/menu");
     }
-
 }
