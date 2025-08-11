@@ -3,9 +3,6 @@
 
 <div class="d-flex flex-column p-3 bg-light border rounded" style="width: 250px;">
     <h4 class="mb-4 text-center">📚 Biblioteca</h4>
-    <button class="btn btn-outline-primary mb-2 text-start" @onclick='() => NavegarA("/")'>
-        <i class="bi bi-house-door me-2"></i> Inicio
-    </button>
     <button class="btn btn-outline-primary mb-2 text-start" @onclick='() => NavegarA("/usuarios")'>
         <i class="bi bi-people-fill me-2"></i> Usuarios
     </button>
@@ -25,6 +22,6 @@
     
     private void CerrarSesion()
     {
-        Navigation.NavigateTo("/login");
+        Navigation.NavigateTo("/");
     }
 }

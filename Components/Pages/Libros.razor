@@ -1,7 +1,12 @@
 ﻿@page "/libros"
 @inject ILibroService LibroService
+@inject NavigationManager Nav
 
 <h3 class="mb-4">Gestión de Libros</h3>
+
+<button class="btn btn-success mb-3" @onclick="VolverAtras">
+    <i class="bi bi-plus-circle me-1"></i> Volver atras
+</button>
 
 <button class="btn btn-success mb-3" @onclick="NuevoLibro">
     <i class="bi bi-plus-circle me-1"></i> Agregar libro
@@ -121,5 +126,10 @@ else
     private void Cancelar()
     {
         modoFormulario = false;
+    }
+
+    private void VolverAtras()
+    {
+        Nav.NavigateTo("/menu");
     }
 }

@@ -5,10 +5,33 @@ namespace PracticoBiblioteca.Services.Implementaciones;
 
 public class LibroService : ILibroService
 {
-    private readonly List<Libro> _libros =
-    [
-        new Libro { Id = 1, Titulo = "Cien Años de Soledad", Autor = "Gabriel García Márquez", Imagen = "imagenes/libro1.jpg", AñoPublicacion = 1967 }
-    ];
+private readonly List<Libro> _libros =
+[
+    new Libro 
+    { 
+        Id = 1, 
+        Titulo = "Cien Años de Soledad", 
+        Autor = "Gabriel García Márquez", 
+        Imagen = "images/cienaniosdesoledad.jpg", 
+        AñoPublicacion = 1967 
+    },
+    new Libro 
+    { 
+        Id = 2, 
+        Titulo = "Don Quijote de la Mancha", 
+        Autor = "Miguel de Cervantes", 
+        Imagen = "donquijote.jpg", 
+        AñoPublicacion = 1605 
+    },
+    new Libro 
+    { 
+        Id = 3, 
+        Titulo = "1984", 
+        Autor = "George Orwell", 
+        Imagen = "1984.jpg", 
+        AñoPublicacion = 1949 
+    }
+];
 
     public List<Libro> ObtenerTodos() => _libros;
 

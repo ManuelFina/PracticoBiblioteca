@@ -7,7 +7,23 @@ public class UsuarioService : IUsuarioService
 {
     private readonly List<Usuario> _usuarios =
     [
-        new Usuario { Id = 1, Nombre = "Admin", Email = "admin@biblioteca.com", Clave = "admin", Imagen = "imagenes/user1.jpg" }
+        new Usuario
+        { 
+            Id = 1, 
+            Nombre = "Admin",
+            Email = "admin@biblioteca.com", 
+            Clave = "admin", 
+            Imagen = "imagenes/user1.jpg"
+        },
+
+        new Usuario
+        {
+            Id = 2,
+            Nombre = "Usuario",
+            Email = "usuario@biblioteca.com",
+            Clave = "user",
+            Imagen = "imagenes/user1.jpg"
+        }
     ];
 
     public List<Usuario> ObtenerTodos() => _usuarios;
