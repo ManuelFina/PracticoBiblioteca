@@ -42,20 +42,21 @@
 
     protected override void OnInitialized()
     {
-        if (Id == 0) return;
-        
-        var libro = LibroService.ObtenerTodos().FirstOrDefault(l => l.Id == Id);
-        
-        if (libro = null) return;
-            
-        libroEditando = new Libro
+        if (Id != 0)
         {
-            Id = libro.Id,
-            Titulo = libro.Titulo,
-            Autor = libro.Autor,
-            AñoPublicacion = libro.AñoPublicacion,
-            Imagen = libro.Imagen
-        };
+            var libro = LibroService.ObtenerTodos().FirstOrDefault(l => l.Id == Id);
+            if (libro != null)
+            {
+                libroEditando = new Libro
+                {
+                    Id = libro.Id,
+                    Titulo = libro.Titulo,
+                    Autor = libro.Autor,
+                    AñoPublicacion = libro.AñoPublicacion,
+                    Imagen = libro.Imagen
+                };
+            }
+        }
     }
 
     private void GuardarLibro()
