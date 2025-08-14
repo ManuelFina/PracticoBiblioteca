@@ -48,7 +48,7 @@ Aplicación móvil desarrollada con **.NET MAUI Blazor Hybrid**, que implementa 
 ## 📦 Instalación y ejecución
 
 ### 1️ Clonar el repositorio
-```bash
+bash
 git clone https://github.com/usuario/biblioteca-app.git
 cd biblioteca-app
 
