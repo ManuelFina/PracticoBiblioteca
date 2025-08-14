@@ -12,7 +12,7 @@ private readonly List<Libro> _libros =
         Id = 1, 
         Titulo = "Cien Años de Soledad", 
         Autor = "Gabriel García Márquez", 
-        Imagen = "images/cienaniosdesoledad.jpg", 
+        Imagen = "img/librodos.jpg", 
         AñoPublicacion = 1967 
     },
     new Libro 
@@ -20,7 +20,7 @@ private readonly List<Libro> _libros =
         Id = 2, 
         Titulo = "Don Quijote de la Mancha", 
         Autor = "Miguel de Cervantes", 
-        Imagen = "donquijote.jpg", 
+        Imagen = "img/libro.jpg", 
         AñoPublicacion = 1605 
     },
     new Libro 
@@ -28,7 +28,7 @@ private readonly List<Libro> _libros =
         Id = 3, 
         Titulo = "1984", 
         Autor = "George Orwell", 
-        Imagen = "1984.jpg", 
+        Imagen = "img/librotres.jpg", 
         AñoPublicacion = 1949 
     }
 ];

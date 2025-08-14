@@ -13,17 +13,8 @@ public class UsuarioService : IUsuarioService
             Nombre = "Admin",
             Email = "admin@biblioteca.com", 
             Clave = "admin", 
-            Imagen = "imagenes/user1.jpg"
+            Imagen = "img/admin.png"
         },
-
-        new Usuario
-        {
-            Id = 2,
-            Nombre = "Usuario",
-            Email = "usuario@biblioteca.com",
-            Clave = "user",
-            Imagen = "imagenes/user1.jpg"
-        }
     ];
 
     public List<Usuario> ObtenerTodos() => _usuarios;
