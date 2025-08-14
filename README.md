@@ -43,28 +43,6 @@ Aplicación móvil desarrollada con **.NET MAUI Blazor Hybrid**, que implementa 
 - **Bootstrap 5**
 - **Bootstrap Icons**
 
-## 📂 Estructura del proyecto
-
-/PracticaBiblioteca
-│
-├── /Models
-│ ├── Usuario.cs
-│ ├── Libro.cs
-│
-├── /Services
-│ ├── IUsuarioService.cs
-│ ├── UsuarioService.cs
-│ ├── ILibroService.cs
-│ ├── LibroService.cs
-│
-├── /Pages
-│ ├── Login.razor
-│ ├── Usuarios.razor
-│ ├── UsuarioForm.razor
-│ ├── Libros.razor
-│ ├── LibroForm.razor
-│ ├── Menu.razor
-  
 ---
 
 ## 📦 Instalación y ejecución
