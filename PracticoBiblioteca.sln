@@ -5,6 +5,8 @@ VisualStudioVersion = 17.14.36212.18
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PracticoBiblioteca", "PracticoBiblioteca.csproj", "{69AF6933-2542-4F73-A852-06BCE7BEABBB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PracticoBibliotecaAPI", "..\PracticoBibliotecaAPI\PracticoBibliotecaAPI.csproj", "{3B4B18BF-646E-48E1-90A5-81678B3C5F8E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -16,6 +18,10 @@ Global
 		{69AF6933-2542-4F73-A852-06BCE7BEABBB}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
 		{69AF6933-2542-4F73-A852-06BCE7BEABBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{69AF6933-2542-4F73-A852-06BCE7BEABBB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B4B18BF-646E-48E1-90A5-81678B3C5F8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B4B18BF-646E-48E1-90A5-81678B3C5F8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B4B18BF-646E-48E1-90A5-81678B3C5F8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B4B18BF-646E-48E1-90A5-81678B3C5F8E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
